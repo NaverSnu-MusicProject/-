@@ -1,0 +1,9 @@
+ABC
+다윤 사랑
+true
+abc
+다윤 좋아
+true
+xyz
+다윤 다윤
+false
