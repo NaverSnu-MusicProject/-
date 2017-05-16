@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> testing now </title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function createFile(){
+        var txt = document.getElementById("txtInput").value;
+        var fileObject = new ActiveXObject("Scripting.FileSystemObject");
+        fWrite = fileObject.CreateTextFile("write.txt",true);
+       // txt=txt.split(/\r\n|\r|\n/g);
+        fWrite.write(txt);//+"</body></html>");
+        fWrite.close()
+        alert("saved");
+      }
+
+      function showFile(){
+        var fileName = "write.txt";
+        var fileObject = new ActiveXObject("Scripting.FileSystemObject");
+        if(!fileObject.FileExists(fileName)){
+          alert("no file");
+        }
+        var fOpen = fileObject.OpenTextFile(fileName,1);
+        document.getElementById("txtOutput").innerHTML="";
+        while(!fOpen.AtEndOfStream){
+          document.getElementById("txtOutput").innerHTML+=fOpen.Readline()+"\r\n";
+
+        }
+        fOpen.close();
+      }
+    </script>
+    <textarea id = "txtInput" name = "text" rows="6" cols="40"></textarea>
+    <br><br>
+    <input type="button" value="Create File" onclick="createFile()">
+    <input type="button" value="show File" onclick="showFile()">
+    <br><br>
+    <textarea id = "txtOutput" name = "text" rows="6" cols="40"></textarea>
+  </body>
+</html>

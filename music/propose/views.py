@@ -63,3 +63,5 @@ def address_proposal_list(request, pk):
 def test(request):
     return render(request, 'propose/test.html',{})
 
+def xx(request):
+    return render(request, 'propose/xx.html',{})

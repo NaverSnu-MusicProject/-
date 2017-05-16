@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <title> testing now </title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function createFile(){
+        var txt = document.getElementById("txtInput").value;
+        var fileObject = new ActiveXObject("scripting.FileSystemObject");
+        fWrite = fileObject.CreateTextFile("C:\write.txt",true);
+        fWrite.wrtie(txt+"</body></html>");
+        fWrite.close()
+        domument.getElementById("txtInput").innerHTML = "press buttion";
+      }
+
+      function showFile(){
+        var filenName = "C:\\wrtie.txt";
+        var fileObject = new ActiveXObject("Scripting.FileSystemObject");
+        if(!fileObjtect.FileExists(fileName)){
+          alert("no file");
+        }
+        var fOpen = fileObject.OpenTextFile(fileName,1);
+        document.getElementById("txtOutput").innerHTML="";
+        while(!fOpen.AtEndOfStream){
+          document.getElementById("txtOutput").innerHTML+=fOpen.Readline();
+        }
+        fOpen.close();
+      }
+    </script>
+    <textarea id = "txtInput" name = "text" rows="6" cols="40"></textarea>
+    <br><br>
+    <input type="button" value="Create File" onclick="createFile()">
+    <input type="button" value"show File" onclick="showFile()">
+
+    <textarea id = "txtOutput" name = "text" row="6" cols="40"></textarea>
+  </body>
+</html>

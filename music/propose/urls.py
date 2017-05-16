@@ -6,6 +6,7 @@ from propose import views
 
 urlpatterns = [
     url(r'^test/$', views.test),
+    url(r'^xx/$',views.xx),
     url(r'^track/$', views.TrackList.as_view()),
     url(r'^track/(?P<pk>[0-9a-zA-Z]+)/$',views.TrackDetail.as_view()),
     url(r'^tag/$',views.TagList.as_view()),

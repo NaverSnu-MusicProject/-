@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=11">
+    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=MpEubC5VuaC6Yg4uKzZ_&submodules=geocoder"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      function createFile(){
+        var txt = document.getElementById("txtInput").value;
+        var fileObject = new ActiveXObject("Scripting.FileSystemObject");
+        fWrite = fileObject.CreateTextFile("write.txt",true);
+       // txt=txt.split(/\r\n|\r|\n/g);
+        fWrite.write(txt);//+"</body></html>");
+        fWrite.close()
+        alert("saved");
+      }
+
+      function showFile(){
+        var fileName = "write.txt";
+        var fileObject = new ActiveXObject("Scripting.FileSystemObject");
+        if(!fileObject.FileExists(fileName)){
+          alert("no file");
+        }
+        var fOpen = fileObject.OpenTextFile(fileName,1);
+        document.getElementById("txtOutput").innerHTML="";
+        while(!fOpen.AtEndOfStream){
+          document.getElementById("txtOutput").innerHTML+=fOpen.Readline()+"\r\n";
+
+        }
+        fOpen.close();
+      }
+      function searchCtoA(r,l){
+        naver.maps.Service.reverseGeocode(
+               {location: new naver.maps.LatLng(r,l),},
+               function(status, response) {
+            if(status !== naver.maps.Service.Status.OK){
+          return alert('Something Wrong!');
+               }
+          var result = response.result,items = result.items;
+
+          link= items[0]['address'];
+	  alert(link);
+          //file create
+        });
+      }
+      function submit(){
+        r=document.getElementById("r").value;
+        l=document.getElementById("l").value;
+        searchCtoA(r,l);
+
+      }
+   </script>
+    <textarea id = "r" name = "text" rows="2" cols="10"></textarea>
+
+    <textarea id = "l" name = "text" rows="2" cols="10"></textarea>
+    <br><br>
+    <input type="button" value="submit File" onclick="submit()">
+    <br><br>
+
+    <textarea id = "txtInput" name = "text" rows="6" cols="40"></textarea>
+    <br><br>
+    <input type="button" value="Create File" onclick="createFile()">
+    <input type="button" value="show File" onclick="showFile()">
+    <br><br>
+    <textarea id = "txtOutput" name = "text" rows="6" cols="40"></textarea>
+  </body>
+</html>
