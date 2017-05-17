@@ -5,47 +5,71 @@
     <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=MpEubC5VuaC6Yg4uKzZ_&submodules=geocoder"></script>
  </head>
   <body>
-    <script>
-      function searchCtoA(){
-//        var link="";
-//        var f = new FileReader();
- //       f.onloadend = function(){
- //         console.log("success")
- //       }
- //       f.readAsText("input.txt");
-//        alert(f);
-        naver.maps.Service.reverseGeocode(
-               {location: new naver.maps.LatLng(37.5666103, 126.9783882),},
-               function(status, response) { 
-            if(status !== naver.maps.Service.Status.OK){
-          return alert('Something Wrong!');
-               }
-          var result = response.result,items = result.items;
-   
-          link= items[0]['address'];
-	  alert(link);    
-          window.location.href = "http://wlxyzlw.iptime.org:8088/address/"+link+"/proposal";
-	});
-      }
-
-//      <body onload='searchCtoA()' /> -> automatically open page
-    </script>
     <div>
       <h1>Perfect Music List for your current place</h1>
-      <button  onClick="searchCtoA();">clickme!</button>
-      <p id="demo"></p>
+      <div id="map" style="width:100%;height:400px;"></div>
+      <div>
+        <input type="text" size="50" id="myField" value="" />
+        <button onClick="hyper()">CURATION</button>
+      </div>
     </div>
-    <table>
-     <tr>
-       <th>Track</th><th>Artist</th><th>Tag</th>
-     </tr>
-     {% for t in music %}
-     <tr>
-       <th> {{music.play_date }}</th>
-     </tr>
-     {% endfor %}
-    </table>
   </body>
+    <script>
+      var mapOptions = {
+        center: new naver.maps.LatLng(37.3595704, 127.105399),
+        zoom: 10
+      };
+      var map = new naver.maps.Map('map', mapOptions);
+      //click on the map
+      var marker = new naver.maps.Marker({
+             position: new naver.maps.LatLng(),
+             map: map
+      });
+      var contentString = [
+            '<div>',
+            '</div>'
+          ].join('');
+      var infowindow = new naver.maps.InfoWindow({content: contentString});
+      naver.maps.Event.addListener(map, 'click', function(e){
+            marker.setPosition(e.coord);
+            var link;
+            naver.maps.Service.reverseGeocode(
+               {location: new naver.maps.LatLng(e.coord.lat(), e.coord.lng()),},
+               function(status, response) {
+                  if(status !== naver.maps.Service.Status.OK){
+                  return alert('Something Wrong!');
+               }
+               var result = response.result.items;
+               link= result[0]['address'];
+               contentString = [
+                   '<div>',
+                   '  <p> '+e.coord+'</p>',
+                   '  <p> '+link+'</p>',
+                   '</div>'
+                   ].join('');
+               var infowindow = new naver.maps.InfoWindow({content: contentString});
+               if(infowindow.getMap()){
+                  infowindow.close();
+               }else {
+                  infowindow.open(map, marker);
+               }
+
+               parts=link.split(" ");
+               var i, go="";
+               for(i=0;i<parts.length;i++){
+                   go += parts[i];
+                   if(parts[i].slice(-1)=='동'||parts[i].slice(-1)=='읍'|| parts[i].slice(-1)=='면'){
+                       document.getElementById('myField').value = go;
+                       break;
+                   }
+                   else go +=" ";
+               }
+            });
+      });
+     function hyper(){
+       window.location.href = "http://wlxyzlw.iptime.org:8008/address/"+document.getElementById('myField').value+"/proposal";
+     }
+    </script>
 </html>
 
-
+                               
