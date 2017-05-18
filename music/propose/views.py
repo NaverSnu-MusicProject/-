@@ -24,13 +24,13 @@ class TagDetail(generics.RetrieveAPIView):
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
 
-class MMFList(generics.ListCreateAPIView):
-    queryset = MMF.objects.all()
-    serializer_class = MMFSerializer
+class MTMList(generics.ListCreateAPIView):
+    queryset = MTM.objects.all()
+    serializer_class = MTMSerializer
 
-class MMFDetail(generics.RetrieveAPIView):
-    queryset = MMF.objects.all()
-    serializer_class = MMFSerializer
+class MTMDetail(generics.RetrieveAPIView):
+    queryset = MTM.objects.all()
+    serializer_class = MTMSerializer
 
 class PlayList(generics.ListCreateAPIView):
     queryset = Play.objects.all()

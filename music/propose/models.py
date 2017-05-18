@@ -45,9 +45,9 @@ class Tag(models.Model):
     class Meta:
         ordering = ['-tag_score']
 
-class MMF(models.Model):
-    mmf_id = models.CharField(max_length=22,primary_key =True)
-    mmf_date = models.DateTimeField()
+class MTM(models.Model):
+    mtm_id = models.CharField(max_length=22,primary_key =True)
+    mtm_date = models.DateTimeField()
     track = models.ForeignKey('Track',on_delete=models.CASCADE)
     tag = models.ForeignKey('Tag',on_delete=models.CASCADE)
     harmony = models.PositiveSmallIntegerField()

@@ -8,8 +8,8 @@ do
     2) track=$line;;
     3) tag=$line;;
     4) harmony=$line
-    eval 'http POST http://wlxyzlw.iptime.org:8008/jamm/ jamm_id=$id jamm_date="$date" track=$track tag=$tag harmony=$harmony' < /dev/tty;;
+    eval 'http POST http://wlxyzlw.iptime.org:8008/mtm/ mtm_id=$id mtm_date="$date" track=$track tag=$tag harmony=$harmony' < /dev/tty;;
   esac
   a=`expr $a + 1`
   a=`expr $a % 5`
-done < jamm.txt
+done < mtm.txt

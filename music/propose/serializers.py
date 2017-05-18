@@ -15,10 +15,10 @@ class TagSerializer(serializers.ModelSerializer):
         model = Tag
         fields = ('tag_name','tag_score')
 
-class MMFSerializer(serializers.ModelSerializer):
+class MTMSerializer(serializers.ModelSerializer):
     class Meta:
-        model = MMF
-        fields = ('mmf_id','mmf_date','track','tag','harmony')
+        model = MTM
+        fields = ('mtm_id','mtm_date','track','tag','harmony')
 
 class PlaySerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,15 +38,15 @@ class ProposalSerializer(serializers.BaseSerializer):
         play = Play.objects.filter(address=obj.address)
         tag = {}
         for p in play:
-            mmf=MMF.objects.filter(track=p.track_id)
-            for j in mmf:
+            mtm=MTM.objects.filter(track=p.track_id)
+            for j in mtm:
                 tag[j.tag]=tag.get(j.tag,0)+j.harmony # *Tag.get(pk=j.tag_name).tag_score
             # mean
         track = {}
         for tn in tag:
-            mmf=MMF.objects.filter(tag=tn)
-            for j in mmf:
-                track[j.track_id] = track.get(j.track_id,0)+j.harmony
-        return track.keys()
+            mtm=MTM.objects.filter(tag=tn)
+            for j in mtm:
+                track[Track.objects.get(pk=j.track_id).track_title] = track.get(j.track_id,0)+j.harmony*tag[tn]
+        return track
     class Meta:
         model = Address
