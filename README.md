@@ -1,6 +1,6 @@
 # NAVER X SNUCSE music project
 ## summary
-> Music curation based on mood of current location<br />
+* Music curation based on mood of current location<br />
 > 특정 장소에서 많이 재생되는 음악 그룹으로부터 장소의 분위기를 파악합니다.<br
 />
 > 그 분위기에 어울리는 노래들을 추천합니다.<br />
