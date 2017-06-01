@@ -1,111 +1,157 @@
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=MpEubC5VuaC6Yg4uKzZ_&submodules=geocoder"></script>
-     <style>
-      h1 { text-align : center;}
-      button {}
-      input {}
-      input_area.element{
-        margin: auto;
-        width : 50%;
-        text-align : center;
-      }
-      div.output_area{
-        border-style: dashed none dashed none;
-      }
-      button:hover{
-        box-shadow: 0 20px 10px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0,19);
-      }
-   </style>
- </head>
-  <body>
-    <div>
-      <h1>Perfect Music List for your current place</h1>
-      <div id="map" style="margin:auto;width:80%;height:400px;"></div>
-      <div>
-        <input type="text" size="50" id="myField" value="" />
-        <button onClick="hyper()">CURATION</button>
-      </div>
-      <div id="output_area">
-        <p id="proposal_list"/>
-      </div>
-    </div>
-  </body>
-    <script>
-      var mapOptions = {
-        center: new naver.maps.LatLng(37.3595704, 127.105399),
+<head>
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/earlyaccess/nanumpenscript.css">
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=MpEubC5VuaC6Yg4uKzZ_&submodules=geocoder"></script>
+<style>
+body{
+  background-color: #FFFFFF;
+}
+h1 {
+  font-size:50px;
+  margin:auto;
+  text-align:center;
+  color : #333333;
+  text-shadow: 3px 2px gray;
+}
+h2 {
+  margin:auto;
+  text-align:center;
+  color : #333333;
+  text-shadow : 2px 1px gray;
+}
+
+
+button {
+  display:block;
+  margin:auto;
+  text-align:center;
+}
+input {
+  display:block;
+  margin: auto;
+  width : 50%;
+  color : #333333;
+  text-align : center;
+}
+p{
+  margin:auto;
+  text-align:center;
+  color : #333333;
+  font-size:30px;
+}
+</style>
+</head>
+<body style="font-family: 'Nanum Pen Script';">
+<div>
+  <h1>MY TOWN MUSIC</h1>
+  <div id="map" style="margin:auto;width:80%;height:400px;border:1px solid Gainsboro"></div>
+  <div id="input_area">
+    <input type="text" size="50" id="myField" value="" />
+    <button onClick="hyper()">!</button>
+  </div>
+  <div id="output_area">
+    <h2>Tag</h2>
+    <p id="proposal_tag"/>
+    <h2>Track</h2>
+    <p id="proposal_track"/>
+    <h2>Artist</h2>
+    <p id="proposal_artist"/>
+    <h2>Album</h2>
+    <p id="proposal_album"/>
+  </div>
+</div>
+</body>
+<script>
+var mapOptions = {
+center: new naver.maps.LatLng(37.4602630,126.9535980),
         zoom: 10
-      };
-      var map = new naver.maps.Map('map', mapOptions);
-      //click on the map
-      var marker = new naver.maps.Marker({
-             position: new naver.maps.LatLng(),
-             map: map
+};
+var map = new naver.maps.Map('map', mapOptions);
+//click on the map
+var marker = new naver.maps.Marker({
+position: new naver.maps.LatLng(),
+map: map
+});
+naver.maps.Event.addListener(map, 'click', function(e){
+    marker.setPosition(e.coord);
+    var link;
+    naver.maps.Service.reverseGeocode(
+      {location: new naver.maps.LatLng(e.coord.lat(), e.coord.lng()),},
+      function(status, response) {
+      if(status !== naver.maps.Service.Status.OK){
+      return alert('Something Wrong!');
+      }
+      var result = response.result.items;
+      link= result[0]['address'];
+      parts=link.split(" ");
+      var i, go="";
+      for(i=0;i<parts.length;i++){
+        go += parts[i];
+        if(parts[i].slice(-1)=='동'||parts[i].slice(-1)=='읍'|| parts[i].slice(-1)=='면'){
+          document.getElementById('myField').value = go;
+          break;
+        }
+        else ;//go +=" ";
+      }
       });
-      var contentString = [
-            '<div>',
-            '</div>'
-          ].join('');
-      var infowindow = new naver.maps.InfoWindow({content: contentString});
-      naver.maps.Event.addListener(map, 'click', function(e){
-            marker.setPosition(e.coord);
-            var link;
-            naver.maps.Service.reverseGeocode(
-               {location: new naver.maps.LatLng(e.coord.lat(), e.coord.lng()),},
-               function(status, response) {
-                  if(status !== naver.maps.Service.Status.OK){
-                  return alert('Something Wrong!');
-               }
-               var result = response.result.items;
-               link= result[0]['address'];
-               contentString = [
-                   '<div>',
-                   '  <p> '+e.coord+'</p>',
-                   '  <p> '+link+'</p>',
-                   '</div>'
-                   ].join('');
-               var infowindow = new naver.maps.InfoWindow({content: contentString});
-               if(infowindow.getMap()){
-                  infowindow.close();
-               }else {
-                  infowindow.open(map, marker);
-               }
+});
+function hyper(){
+  var URL = "http://wlxyzlw.iptime.org:8008/address/"+document.getElementById('myField').value+"/proposal/";
+  var xmlhttp = new XMLHttpRequest();
 
-               parts=link.split(" ");
-               var i, go="";
-               for(i=0;i<parts.length;i++){
-                   go += parts[i];
-                   if(parts[i].slice(-1)=='동'||parts[i].slice(-1)=='읍'|| parts[i].slice(-1)=='면'){
-                       document.getElementById('myField').value = go;
-                       break;
-                   }
-                   else ;//go +=" ";
-               }
-            });
-      });
-     function hyper(){
-       var URL = "http://wlxyzlw.iptime.org:8088/address/"+document.getElementById('myField').value+"/proposal/";
-//       console.log("#"+document.getElementById('myField').value);
-       var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function(){
+    document.getElementById('proposal_tag').innerHTML="LOADING...";//TODO render in your favor
+    document.getElementById('proposal_track').innerHTML="LOADING...";//TODO render in your favor
+    document.getElementById('proposal_album').innerHTML="LOADING...";//TODO render in your favor
+    document.getElementById('proposal_artist').innerHTML="LOADING...";//TODO render in your favor
 
-       xmlhttp.onreadystatechange = function(){
-         if(this.readyState == 4 && this.status == 200){
-           console.log("http GET success");
-//           console.log(xmlhttp.responseText);
-           var obj = JSON.parse(this.responseText);
-           for(i=0;i<obj.length;i++)
-             document.getElementById('proposal_list').innerHTML += obj[i]+'<br>';//TODO render in your favor
-         }
-       }
-       xmlhttp.open("GET", URL, true); //true for asynchronous
-       xmlhttp.send();
+    if(this.readyState == 4 && this.status == 200){
+      console.log("http GET success");
+      var obj = JSON.parse(this.responseText);
+      document.getElementById('proposal_tag').innerHTML="";//TODO render in your favor
+      document.getElementById('proposal_track').innerHTML="";//TODO render in your favor
+      document.getElementById('proposal_album').innerHTML="";//TODO render in your favor
+      document.getElementById('proposal_artist').innerHTML="";//TODO render in your favor
+      for(i=0;i<obj.length;i++){
+        //tag
+        if(i==0){
+          for(j=0;j<obj[i].length;j++)
+            document.getElementById('proposal_tag').innerHTML += obj[i][j] + '<br>';//TODO render in your favor
+        }
+        //track
+        else if(i==1){
+          for(j=0;j<obj[i].length;j++){
+            var s = obj[i][j][0]+'(은)는 '+obj[i][j][2]+'에 수록된 ';
+            if(obj[i][j][1])s+='타이틀 ';
+            document.getElementById('proposal_track').innerHTML += s + '곡이다.<br>'
+          }
+        }
+        //artist
+        else if(i==2){
+          for(j=0;j<obj[i].length;j++){
+            var s=obj[i][j][0]+'(은)는 '
+              if(obj[i][j][2]>100000000)s+='국내에 잘 알려진 유명 ';
+              else s+='국내에 잘 알려지지 않은 ';
+            if(obj[i][j][1])s+='남성 ';
+            else s+='여성 ';
+            document.getElementById('proposal_artist').innerHTML += s + '아티스트이다. <br>';//TODO render in your favor
+          }
+        }
+        //album
+        else{
+          for(j=0;j<obj[i].length;j++)
+            document.getElementById('proposal_album').innerHTML += obj[i][j] + '(을)를 추천합니다!<br>';//TODO render in your favor
+        }
+      }
+    }
+  }
+  xmlhttp.open("GET", URL, true); //true for asynchronous
 
-//       httpGet("http://wlxyzlw.iptime.org:8088/track");
-     //  window.location.href = "http://wlxyzlw.iptime.org:8008/address/"+document.getElementById('myField').value+"/proposal";
-     }
-    </script>
+  xmlhttp.send();
+}
+</script>
 </html>
 
-                               
+

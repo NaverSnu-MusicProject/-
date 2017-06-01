@@ -7,6 +7,29 @@ from propose.serializers import *
 from rest_framework import generics,status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+class AlbumList(generics.ListCreateAPIView):
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+
+class AlbumDetail(generics.RetrieveAPIView):
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer
+
+class ArtistList(generics.ListCreateAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+
+class ArtistDetail(generics.RetrieveAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializer
+
+class AAList(generics.ListCreateAPIView):
+    queryset = AA.objects.all()
+    serializer_class = AASerializer
+
+class AADetail(generics.RetrieveDestroyAPIView):
+    queryset = AA.objects.all()
+    serializer_class = AASerializer
 
 class TrackList(generics.ListCreateAPIView):
     queryset = Track.objects.all()
@@ -36,17 +59,15 @@ class PlayList(generics.ListCreateAPIView):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
 
-class PlayDetail(generics.RetrieveAPIView):
+class PlayDetail(generics.RetrieveDestroyAPIView):
     queryset = Play.objects.all()
     serializer_class = PlaySerializer
 
 class AddressList(generics.ListCreateAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-#    def perform_create(self, serializer):
-#        serializer.save(owner=self.request.user)
 
-class AddressDetail(generics.RetrieveAPIView):
+class AddressDetail(generics.RetrieveDestroyAPIView):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
 
