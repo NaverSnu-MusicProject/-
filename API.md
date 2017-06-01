@@ -7,8 +7,8 @@
 ## 개발환경 구성
 * REST API는 HTTP 요청을 보낼 수 있는 환경이라면 어디에서든 이용할 수 있습니다. 다음은 REST API를 활용할 수 있는 환경의 예입니다.
 > 모바일/PC 웹 환경에서 Javascript를 활용
-> 다양한 환경(Java, Ruby, Python 등)의 웹 서버에서 활용
-> iOS, Android 등 다양한 모바일 환경에서 활용
+다양한 환경(Java, Ruby, Python 등)의 웹 서버에서 활용
+iOS, Android 등 다양한 모바일 환경에서 활용
 
 ## MTM API 상세기능
 ### MTM curation API
