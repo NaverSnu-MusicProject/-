@@ -34,15 +34,17 @@
 >   __403__<br />
 
 * 예시 코드
-> function API_example(){<br />
->   var URL = "http://wlxyzlw.iptime.org:8008/address/서울특별시관악구신림동/proposal/";<br />
->   var xmlhttp = new XMLHttpRequest();<br />
->   xmlhttp.onreadystatechange = function(){<br />
->     if(this.readyState == 4 && this.status == 200){<br />
->       var obj = JSON.parse(this.responseText);<br />
->       /*Do Something*/<br />
->     }<br />
->   }<br />
->   xmlhttp.open("GET", URL, true);<br />
->   xmlhttp.send();<br />
-> }<br />
+```
+function API_example(){<br />
+  var URL = "http://wlxyzlw.iptime.org:8008/address/서울특별시관악구신림동/proposal/";<br />
+  var xmlhttp = new XMLHttpRequest();<br />
+  xmlhttp.onreadystatechange = function(){<br />
+    if(this.readyState == 4 && this.status == 200){<br />
+      var obj = JSON.parse(this.responseText);<br />
+      /*Do Something*/<br />
+    }<br />
+  }<br />
+  xmlhttp.open("GET", URL, true);<br />
+  xmlhttp.send();<br />
+}<br />
+```
