@@ -6,9 +6,9 @@
 
 ## 개발환경 구성
 * REST API는 HTTP 요청을 보낼 수 있는 환경이라면 어디에서든 이용할 수 있습니다. 다음은 REST API를 활용할 수 있는 환경의 예입니다.
-> 모바일/PC 웹 환경에서 Javascript를 활용
-> 다양한 환경(Java, Ruby, Python 등)의 웹 서버에서 활용
->iOS, Android 등 다양한 모바일 환경에서 활용
+> 모바일/PC 웹 환경에서 Javascript를 활용<br />
+> 다양한 환경(Java, Ruby, Python 등)의 웹 서버에서 활용<br />
+>iOS, Android 등 다양한 모바일 환경에서 활용<br />
 
 ## MTM API 상세기능
 ### MTM curation API
@@ -27,22 +27,22 @@
 > 태그 = 태그 이름(string), size = 10<br />
 > 음악 = [ 음악 이름(string), 타이틀 곡 여부(bool), 수록 앨범 이름(string) ], size = 10<br />
 > 아티스트 = [ 아티스트 이름(string), 아티스트 성별(bool), 인기도(string)], size = 5
-> 앨범 = 앨범 이름(string), size = 5
+> 앨범 = 앨범 이름(string), size = 5<br />
 
   * 에러 코드
->   __400__
->   __403__
+>   __400__<br />
+>   __403__<br />
 
 * 예시 코드
-> function API_example(){
->   var URL = "http://wlxyzlw.iptime.org:8008/address/서울특별시관악구신림동/proposal/";
->   var xmlhttp = new XMLHttpRequest();
->   xmlhttp.onreadystatechange = function(){
->     if(this.readyState == 4 && this.status == 200){
->       var obj = JSON.parse(this.responseText);>
->       /*Do Something*/
->     }
->   }
->   xmlhttp.open("GET", URL, true);
->   xmlhttp.send();
-> }
+> function API_example(){<br />
+>   var URL = "http://wlxyzlw.iptime.org:8008/address/서울특별시관악구신림동/proposal/";<br />
+>   var xmlhttp = new XMLHttpRequest();<br />
+>   xmlhttp.onreadystatechange = function(){<br />
+>     if(this.readyState == 4 && this.status == 200){<br />
+>       var obj = JSON.parse(this.responseText);<br />
+>       /*Do Something*/<br />
+>     }<br />
+>   }<br />
+>   xmlhttp.open("GET", URL, true);<br />
+>   xmlhttp.send();<br />
+> }<br />
