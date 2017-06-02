@@ -14,7 +14,7 @@
 ### MTM curation API
   * method :GET
   * 인증 : -
-  * 요청 URL: "http://wlxyzlw.iptime.org:8008/"+[행정주소]+"/proposal"
+  * 요청 URL: "http://wlxyzlw.iptime.org:8008/address/[행정주소]/proposal"
   * 출력 포맷 : JSON/XML
   * 설명 : 요청한 장소에 어울리는 추천 음악리스트 및 태그, 아티스트 등을 가져옴
   * 요청 변수: place
